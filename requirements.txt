@@ -1,1 +1,7 @@
 azure-storage-blob
+mysql-connector-python~=9.1.0
+pydantic~=2.10.2
+azure-core~=1.32.0
+uvicorn~=0.32.1
+fastapi~=0.115.5
+requests~=2.32.3
