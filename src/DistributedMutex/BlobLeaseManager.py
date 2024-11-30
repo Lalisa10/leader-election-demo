@@ -47,8 +47,14 @@ class BlobLeaseManager:
     
     async def renew_lease_periodically(self, pipe):
         while self.has_lease():
-            await asyncio.gather(self.renew_lease(), asyncio.sleep(RENEW_DURATION))
-            pipe.send(self.lease is not None)
+            try:
+                await asyncio.gather(self.renew_lease(), asyncio.sleep(RENEW_DURATION))
+                pipe.send(self.lease is not None)
+            except:
+                print("Lease expired! Attempting to acquire lease...")
+                self.lease = None
+                await self.acquire_lease_periodically(pipe)
+
 
     async def run(self, pipe):
         while True:

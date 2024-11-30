@@ -12,6 +12,7 @@ class DistributedMutex:
 
     async def run_task(self, pipe):
         while True:
+            await asyncio.sleep(30)
             lease_status = pipe.recv()
             if lease_status is True:
                 await self.leader_task()

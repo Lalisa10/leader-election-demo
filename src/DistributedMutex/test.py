@@ -1,18 +1,10 @@
 from DistributedMutex import DistributedMutex
-import asyncio
-import datetime
-
-async def leader_task():
-   print("I'm the leader!")
-   await asyncio.sleep(10)
-
-async def worker_task():
-   print("I'm a worker!")
-   await asyncio.sleep(10)
+from constant import DB_HOST, DB_USER, DB_PASSWORD, DB_NAME
+from MySqlHandler import MySQLHandler
 
 def main():
-    mutex = DistributedMutex(leader_task, worker_task)
+    mysql_handler = MySQLHandler(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
+    mutex = DistributedMutex(mysql_handler.leader_task, mysql_handler.worker_task)
     mutex.run()
-    
 main()
 

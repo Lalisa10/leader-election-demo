@@ -2,6 +2,11 @@ LEASE_DURATION = 30
 RENEW_DURATION = 20
 ACQUIRE_DURATION = 20
 
-CONNECTION_STRING = "" #Paste your connection string
-CONTAINER_NAME = ""
-BLOB_NAME = ""
+DB_HOST = "localhost"
+DB_USER = "root"
+DB_PASSWORD = "password"
+DB_NAME = "leader_election_demo"
+
+CONNECTION_STRING = ""
+CONTAINER_NAME = "leases"
+BLOB_NAME = "leases"
