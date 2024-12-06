@@ -40,6 +40,7 @@ Có 3 chiến lược chính để chọn ra leader: *cạnh tranh Mutex*, *cài
 Thuật toán cài đặt Leader Election với Apache Zookeeper:
 - Mỗi node tạo ra một Sequential Ephermal Znode;
 > Sequential: tên các zNode được gắn số thứ tự một cách tuần tự, VD: /election/leader-00001, /election/leader-00002, /election/leader-00003
+> 
 > Ephermal: Các Znode này sẽ bị xóa khi node ngừng hoạt động. Như vậy các Znode đóng vai trò như một tham chiếu tình trạng hoạt động của node giúp ta biết được node có hoạt động hay không.
 - Ta sẽ duy trì hệ thống sao cho node tạo ra zNode với thứ tự nhỏ nhất sẽ được bầu chọn leader;
 - Các node sẽ theo dõi (watch) zNode có thứ tự lớn nhất nhỏ hơn số thứ tự của zNode mà nó tạo ra;
