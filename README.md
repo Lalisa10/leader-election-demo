@@ -60,7 +60,7 @@ Leader sẽ thực hiện ghi dữ liệu thời tiết từ API của [OpenWeat
 
 ### Các bước cài đặt và trải nghiệm
 #### Bước 1:
-Trước tiên, bạn cần có tài khoản Azure Storage. Sau đó dán connection string của Storage Account, tên một blob và container chứa nó vào [constant.py](src/DistributedMutex/constant.py)
+Trước tiên, bạn cần có tài khoản Azure Storage. Sau đó dán connection string của Storage Account, tên một blob và container chứa nó vào [constant.py](src/DistributedMutex/constant.py), cài đặt MySQL trên máy, tạo database đặt tên leader_election_demo, tạo table tên weather, có các thuộc tính là city(varchar), temperature(decimal), humidity(int), description(varchar).
 #### Bước 2:
 Chạy lần lượt các lệnh sau:
 ```shell
@@ -72,9 +72,10 @@ Tạo thêm nhiều instance của ứng dụng bằng cách mở nhiều termin
 ```
 python src/DistributedMutex/test.py
 ```
-Sau đó bạn sẽ chỉ thấy đúng một tiến trình có thể trở thành leader.
+Sau đó bạn sẽ chỉ thấy đúng một tiến trình có thể trở thành leader. Leader cứ sau 30s sẽ call API và lấy về thông tin của 5 thành phố: Hà Nội, New York, Tokyo, Paris, London và lưu vào database mà ta vừa tạo, worker chỉ có thể đọc 
+thông tin từ db và log ra console
 #### Bước 4:
-Thử tắt tiến trình leader hiện tại đi, sau một khoảng thời gian một trong các tiến trình còn lại sẽ trở thành leader.
+Thử tắt tiến trình leader hiện tại đi, sau một khoảng thời gian một trong các tiến trình còn lại sẽ giành được lease và trở thành leader.
 
 ## Tài liệu tham khảo:
 1. [Leader Election pattern - Azure](https://learn.microsoft.com/en-us/azure/architecture/patterns/leader-election)
